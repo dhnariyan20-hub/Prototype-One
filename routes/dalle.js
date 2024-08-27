@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 
 async function queryHuggingFace(prompt) {
   const fetch = (await import("node-fetch")).default;
@@ -73,4 +73,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
