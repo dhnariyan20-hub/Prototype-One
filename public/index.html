@@ -3,10 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Express App</title>
+    <title>Available APIs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #007BFF;
+        }
+        .api-list {
+            list-style: none;
+            padding: 0;
+        }
+        .api-item {
+            background: #fff;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .api-item h2 {
+            margin: 0 0 5px;
+            font-size: 1.2em;
+        }
+        .api-item p {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Dejigen App</h1>
-    <p>Use the endpoints /flux_1_schnell and /flux_1_dev to query the models.</p>
+    <h1>Available APIs</h1>
+    <ul class="api-list">
+        <li class="api-item">
+            <h2>Flux 1 Schnell API</h2>
+            <p>Endpoint: <code>/flux_1_schnell</code></p>
+            <p>Description: Generates images based on the provided prompt using the FLUX.1 Schnell model.</p>
+        </li>
+        <li class="api-item">
+            <h2>Flux 1 Dev API</h2>
+            <p>Endpoint: <code>/flux_1_dev</code></p>
+            <p>Description: Generates images based on the provided prompt using the FLUX.1 Dev model.</p>
+        </li>
+        <li class="api-item">
+            <h2>NSFW Image Generation API</h2>
+            <p>Endpoint: <code>/nsfw</code></p>
+            <p>Description: Generates NSFW images based on the provided prompt using the NSFW model.</p>
+        </li>
+    </ul>
 </body>
 </html>
