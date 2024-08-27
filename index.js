@@ -2,6 +2,10 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 // Resolve current directory
 const __filename = fileURLToPath(import.meta.url);
@@ -16,7 +20,7 @@ function loadRoutes() {
 
   // Check if routes directory exists
   if (!fs.existsSync(routesPath)) {
-    console.error("Routes directory does not exist.");
+    console.error('Routes directory does not exist.');
     process.exit(1);
   }
 
