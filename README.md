@@ -2,3 +2,4 @@
 # niji-er-mayre-chude-nijiz-banabo-somossa-nai
 # Stable-diffusion-xl
 # Stable-diffusion-xl-
+# Mang-skb-apii
