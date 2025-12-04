@@ -31,7 +31,13 @@ async function loadRoutes() {
       try {
         const module = await import(`./routes/${file}`);
         app.use(`/${routeName}`, module.default || module);
-        loadedRoutes.push(`/${routeName}`);
+        loadedRoutes.push({
+          name: routeName,
+          endpoint: `/${routeName}`,
+          method: 'GET',
+          description: `Access the ${routeName} API`,
+          example: '?example=demo'
+        });
         console.log(`Loaded route: /${routeName}`);
       } catch (err) {
         console.error(`Error loading route ${file}:`, err);
@@ -42,17 +48,16 @@ async function loadRoutes() {
 
 await loadRoutes();
 
+app.get('/api/info', (req, res) => {
+  res.json(loadedRoutes);
+});
+
 app.get(['/', '/home'], (req, res) => {
   res.sendFile(homeHTML);
 });
 
 app.get('/docs', (req, res) => {
-  let html = fs.readFileSync(docsHTML, 'utf8');
-  const routesList = loadedRoutes
-    .map(r => `<li class="mb-1"><a href="${r}" class="text-primary-500 hover:underline">${r}</a></li>`)
-    .join('');
-  html = html.replace('{{routes}}', routesList);
-  res.send(html);
+  res.sendFile(docsHTML);
 });
 
 app.use((req, res) => {
