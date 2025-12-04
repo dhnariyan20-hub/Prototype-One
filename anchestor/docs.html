@@ -1,147 +1,122 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anchestor Docs | xemonbae01</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        pre {
-            scrollbar-width: thin;
-            scrollbar-color: #6366f1 #e5e7eb;
-        }
-        pre::-webkit-scrollbar {
-            height: 8px;
-        }
-        pre::-webkit-scrollbar-thumb {
-            background-color: #6366f1;
-            border-radius: 4px;
-        }
-        pre::-webkit-scrollbar-track {
-            background-color: #e5e7eb;
-            border-radius: 4px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchestor Docs | xemonbae01</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<style>
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(to bottom, #e2e8f0, #f8fafc); }
+    pre { scrollbar-width: thin; scrollbar-color: #6366f1 #e5e7eb; }
+    pre::-webkit-scrollbar { height: 8px; }
+    pre::-webkit-scrollbar-thumb { background-color: #6366f1; border-radius: 4px; }
+    pre::-webkit-scrollbar-track { background-color: #e5e7eb; border-radius: 4px; }
+    .glass { background: rgba(30, 30, 30, 0.25); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; }
+    .text-glow { text-shadow: 0 0 8px rgba(0,0,0,0.2); }
+    .transition-all-custom { transition: all 0.3s ease; }
+</style>
 </head>
-<body class="bg-gray-50 text-gray-900">
-    <custom-navbar></custom-navbar>
+<body class="text-gray-900">
 
-    <main class="container mx-auto px-4 py-12">
-        <h1 class="text-4xl font-bold text-primary-500 mb-8">API Documentation</h1>
-        <p class="mb-6 text-gray-700">Below are the available APIs hosted by Anchestor. Click “Try it” to test each API.</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="api-cards">
-            <!-- API cards will be dynamically injected here -->
+<nav class="sticky top-0 z-50 glass shadow-xl">
+    <div class="container mx-auto px-6">
+        <div class="flex justify-between items-center py-4">
+            <a href="/" class="text-2xl font-extrabold text-primary-500 flex items-center text-glow">
+                <i data-feather="cpu" class="mr-2"></i> Anchestor
+            </a>
+            <div class="md:hidden relative">
+                <button id="menu-btn" class="p-2 rounded hover:bg-white/10 transition-all">
+                    <i data-feather="more-vertical"></i>
+                </button>
+                <div id="menu" class="hidden absolute right-0 mt-2 w-48 bg-gray-900/80 backdrop-blur-lg border border-white/20 rounded-lg shadow-lg overflow-hidden transition-all-custom">
+                </div>
+            </div>
+            <div class="hidden md:flex space-x-8 text-lg font-medium">
+                <a href="/" class="text-gray-100 hover:text-primary-500 transition-all">Home</a>
+                <a href="/docs" class="text-gray-100 hover:text-primary-500 transition-all">Docs</a>
+                <a href="https://github.com/xemonbae01" target="_blank" class="text-gray-100 hover:text-primary-500 transition-all">GitHub</a>
+            </div>
         </div>
-    </main>
+    </div>
+</nav>
 
-    <custom-footer></custom-footer>
+<main class="container mx-auto px-6 py-16">
+    <h1 class="text-5xl font-extrabold text-primary-500 mb-8 text-center text-glow">API Documentation</h1>
+    <p class="mb-12 text-gray-100 text-center text-lg text-glow">Below are the available APIs hosted by Anchestor. Click “Try it” to test each API.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="api-cards"></div>
+</main>
 
-    <script>
-        class CustomNavbar extends HTMLElement {
-            connectedCallback() {
-                this.attachShadow({ mode: 'open' });
-                this.shadowRoot.innerHTML = `
-                    <nav class="sticky top-0 z-50 bg-white/80 border-b border-gray-200 backdrop-blur-md">
-                        <div class="container mx-auto px-4">
-                            <div class="flex justify-between items-center py-4">
-                                <a href="/" class="text-xl font-bold text-primary-500 flex items-center">
-                                    <i data-feather="cpu" class="mr-2"></i> Anchestor
-                                </a>
-                                <div class="hidden md:flex space-x-8">
-                                    <a href="/" class="text-gray-700 hover:text-primary-500">Home</a>
-                                    <a href="/docs" class="text-gray-700 hover:text-primary-500">Docs</a>
-                                    <a href="https://github.com/xemonbae01" target="_blank" class="text-gray-700 hover:text-primary-500">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
-                `;
-                feather.replace();
-            }
-        }
+<footer class="glass text-center py-8 text-gray-100 text-sm mt-12 shadow-inner">
+    &copy; 2025 xemonbae01 | Anchestor
+</footer>
 
-        class CustomFooter extends HTMLElement {
-            connectedCallback() {
-                this.innerHTML = `
-                    <footer class="text-center py-6 text-gray-500 text-sm">
-                        &copy; 2025 xemonbae01 | Anchestor
-                    </footer>
-                `;
-            }
-        }
+<script>
+feather.replace();
 
-        customElements.define('custom-navbar', CustomNavbar);
-        customElements.define('custom-footer', CustomFooter);
+const menuBtn = document.getElementById('menu-btn');
+const menu = document.getElementById('menu');
+menuBtn.addEventListener('click', () => menu.classList.toggle('hidden'));
+document.addEventListener('click', (e) => { if (!menu.contains(e.target) && e.target !== menuBtn) menu.classList.add('hidden'); });
 
-        const availableAPIs = [
-            {
-                name: "DALL-E Image Generator",
-                endpoint: "/dalle",
-                description: "Generate AI images from prompts using DALL-E model.",
-                method: "GET",
-                example: "?prompt=Sunset&apikey=redwan"
-            },
-            {
-                name: "NSFW Image Generator",
-                endpoint: "/nsfw",
-                description: "Generate NSFW AI images using NSFW model.",
-                method: "GET",
-                example: "?prompt=example&apikey=redwan"
-            },
-            {
-                name: "FLUX.1 Dev Model",
-                endpoint: "/flux-dev",
-                description: "Generate AI images using FLUX.1 dev model.",
-                method: "GET",
-                example: "?prompt=example"
-            },
-            {
-                name: "FLUX.1 Schnell Model",
-                endpoint: "/flux-schnell",
-                description: "Generate AI images using FLUX.1 schnell model.",
-                method: "GET",
-                example: "?prompt=example"
-            }
-        ];
+async function loadAPIs() {
+    try {
+        const res = await fetch('/docs'); 
+        const htmlText = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
 
-        const apiCardsContainer = document.getElementById("api-cards");
+        const routesList = Array.from(doc.querySelectorAll('a[href^="/"]'))
+            .filter(a => !['/','/home','/docs'].includes(a.getAttribute('href')))
+            .map(a => ({
+                name: a.getAttribute('href').replace('/',''),
+                endpoint: a.getAttribute('href'),
+                description: `Access the ${a.getAttribute('href')} API`,
+                method: 'GET',
+                example: '?example=demo'
+            }));
 
-        availableAPIs.forEach(api => {
+        const apiCardsContainer = document.getElementById('api-cards');
+        routesList.forEach(api => {
             const card = document.createElement("div");
-            card.className = "bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between";
+            card.className = "glass p-6 rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition-all-custom flex flex-col justify-between";
             card.innerHTML = `
-                <h3 class="text-xl font-bold mb-2 text-primary-500">${api.name}</h3>
-                <p class="text-gray-600 mb-4">${api.description}</p>
+                <h3 class="text-xl font-bold mb-2 text-primary-500 text-glow">${api.name}</h3>
+                <p class="text-gray-100 mb-4 text-glow">${api.description}</p>
                 <p class="mb-4">
                     <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">${api.method}</span>
                     <code class="bg-gray-100 px-2 py-1 rounded text-sm">${api.endpoint}${api.example}</code>
                 </p>
-                <button class="mt-auto px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition" onclick="tryAPI('${api.endpoint}', '${api.example}')">Try it</button>
-                <pre class="mt-4 text-sm bg-gray-50 p-3 rounded overflow-x-auto" id="response-${api.endpoint.replace('/','')}">Response will appear here...</pre>
+                <button class="mt-auto px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-all font-semibold" onclick="tryAPI('${api.endpoint}', '${api.example}')">Try it</button>
+                <pre class="mt-4 text-sm bg-gray-50 p-3 rounded overflow-x-auto" id="response-${api.name}">Response will appear here...</pre>
             `;
             apiCardsContainer.appendChild(card);
         });
 
-        async function tryAPI(endpoint, query) {
-            const responseEl = document.getElementById(`response-${endpoint.replace('/','')}`);
-            try {
-                const res = await fetch(`${endpoint}${query}`);
-                if (!res.ok) throw new Error(`Status ${res.status}`);
-                const blob = await res.blob();
-                if (res.headers.get("Content-Type").includes("image")) {
-                    const url = URL.createObjectURL(blob);
-                    responseEl.innerHTML = `<img src="${url}" alt="Generated Image" class="rounded-lg max-w-full" />`;
-                } else {
-                    const text = await res.text();
-                    responseEl.textContent = text;
-                }
-            } catch (err) {
-                responseEl.textContent = `Error: ${err.message}`;
-            }
+    } catch (err) {
+        console.error('Failed to load APIs:', err);
+    }
+}
+
+async function tryAPI(endpoint, query) {
+    const responseEl = document.getElementById(`response-${endpoint.replace('/','')}`);
+    try {
+        const res = await fetch(`${endpoint}${query}`);
+        if (!res.ok) throw new Error(`Status ${res.status}`);
+        const blob = await res.blob();
+        if (res.headers.get("Content-Type").includes("image")) {
+            const url = URL.createObjectURL(blob);
+            responseEl.innerHTML = `<img src="${url}" alt="Generated Image" class="rounded-lg max-w-full" />`;
+        } else {
+            const text = await res.text();
+            responseEl.textContent = text;
         }
-    </script>
+    } catch (err) {
+        responseEl.textContent = `Error: ${err.message}`;
+    }
+}
+
+loadAPIs();
+</script>
 </body>
-          </html>
-          
+</html>
