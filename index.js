@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const routesDir = path.join(__dirname, 'routes');
-const anchestorDir = path.join(__dirname, '..', 'anchestor');
+const anchestorDir = path.join(__dirname, 'anchestor');
 
 const homeHTML = path.join(anchestorDir, 'index.html');
 const docsHTML = path.join(anchestorDir, 'docs.html');
@@ -22,13 +22,15 @@ const notFoundHTML = path.join(anchestorDir, '404.html');
 let loadedRoutes = [];
 
 async function loadRoutes() {
+  if (!fs.existsSync(routesDir)) return;
+
   const files = fs.readdirSync(routesDir);
   for (const file of files) {
     if (path.extname(file) === '.js') {
       const routeName = path.basename(file, '.js');
       try {
         const module = await import(`./routes/${file}`);
-        app.use(`/${routeName}`, module.default);
+        app.use(`/${routeName}`, module.default || module);
         loadedRoutes.push(`/${routeName}`);
         console.log(`Loaded route: /${routeName}`);
       } catch (err) {
@@ -46,7 +48,9 @@ app.get(['/', '/home'], (req, res) => {
 
 app.get('/docs', (req, res) => {
   let html = fs.readFileSync(docsHTML, 'utf8');
-  const routesList = loadedRoutes.map(r => `<li><a href="${r}">${r}</a></li>`).join('');
+  const routesList = loadedRoutes
+    .map(r => `<li class="mb-1"><a href="${r}" class="text-primary-500 hover:underline">${r}</a></li>`)
+    .join('');
   html = html.replace('{{routes}}', routesList);
   res.send(html);
 });
