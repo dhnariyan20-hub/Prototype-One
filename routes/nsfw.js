@@ -1,8 +1,8 @@
-const express = require("express");
+import express from "express";
 
 async function queryHuggingFace(prompt) {
   const fetch = (await import("node-fetch")).default;
-  const timeoutDuration = 120000; // 120 seconds (2 minutes)
+  const timeoutDuration = 120000; // 2 minutes
 
   try {
     const controller = new AbortController();
@@ -12,16 +12,16 @@ async function queryHuggingFace(prompt) {
       "https://api-inference.huggingface.co/models/Dremmar/nsfw-xl",
       {
         headers: {
-          Authorization: `Bearer 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`,
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.HF_API_KEY}`,
+          "Content-Type": "application/json"
         },
         method: "POST",
         body: JSON.stringify({ inputs: prompt }),
-        signal: controller.signal, // Add timeout signal
+        signal: controller.signal
       }
     );
 
-    clearTimeout(timeoutId); // Clear the timeout if the request completes successfully
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -29,10 +29,11 @@ async function queryHuggingFace(prompt) {
 
     const result = await response.blob();
     return result;
+
   } catch (error) {
-    if (error.name === 'AbortError') {
-      console.error('Request timed out');
-      throw new Error('Image generation timed out'); // Customize this error message if needed
+    if (error.name === "AbortError") {
+      console.error("Request timed out");
+      throw new Error("Image generation timed out");
     } else {
       console.error("Error querying the model:", error);
       throw error;
@@ -42,10 +43,10 @@ async function queryHuggingFace(prompt) {
 
 const router = express.Router();
 
-// Your API key for security
+// API key for the route
 const API_KEY = "redwan";
 
-// Route to handle image generation for NSFW model
+// Route to handle NSFW image generation
 router.get("/", async (req, res) => {
   const prompt = req.query.prompt;
   const apiKey = req.query.apikey;
@@ -61,16 +62,19 @@ router.get("/", async (req, res) => {
   try {
     const imageBlob = await queryHuggingFace(prompt);
     res.setHeader("Content-Type", "image/png");
-    imageBlob.arrayBuffer().then((buffer) => {
-      res.send(Buffer.from(buffer));
-    });
+
+    const buffer = Buffer.from(await imageBlob.arrayBuffer());
+    res.send(buffer);
+
   } catch (error) {
-    if (error.message === 'Image generation timed out') {
-      res.status(504).send("Image generation timed out. Please try a simpler prompt or try again later.");
+    if (error.message === "Image generation timed out") {
+      res
+        .status(504)
+        .send("Image generation timed out. Please try a simpler prompt or try again later.");
     } else {
       res.status(500).send("Error generating image");
     }
   }
 });
 
-module.exports = router;
+export default router;
