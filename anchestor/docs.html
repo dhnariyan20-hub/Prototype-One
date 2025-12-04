@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anchestor Docs | xemonbae01</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        pre {
+            scrollbar-width: thin;
+            scrollbar-color: #6366f1 #e5e7eb;
+        }
+        pre::-webkit-scrollbar {
+            height: 8px;
+        }
+        pre::-webkit-scrollbar-thumb {
+            background-color: #6366f1;
+            border-radius: 4px;
+        }
+        pre::-webkit-scrollbar-track {
+            background-color: #e5e7eb;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <custom-navbar></custom-navbar>
+
+    <main class="container mx-auto px-4 py-12">
+        <h1 class="text-4xl font-bold text-primary-500 mb-8">API Documentation</h1>
+        <p class="mb-6 text-gray-700">Below are the available APIs hosted by Anchestor. Click “Try it” to test each API.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="api-cards">
+            <!-- API cards will be dynamically injected here -->
+        </div>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script>
+        class CustomNavbar extends HTMLElement {
+            connectedCallback() {
+                this.attachShadow({ mode: 'open' });
+                this.shadowRoot.innerHTML = `
+                    <nav class="sticky top-0 z-50 bg-white/80 border-b border-gray-200 backdrop-blur-md">
+                        <div class="container mx-auto px-4">
+                            <div class="flex justify-between items-center py-4">
+                                <a href="/" class="text-xl font-bold text-primary-500 flex items-center">
+                                    <i data-feather="cpu" class="mr-2"></i> Anchestor
+                                </a>
+                                <div class="hidden md:flex space-x-8">
+                                    <a href="/" class="text-gray-700 hover:text-primary-500">Home</a>
+                                    <a href="/docs" class="text-gray-700 hover:text-primary-500">Docs</a>
+                                    <a href="https://github.com/xemonbae01" target="_blank" class="text-gray-700 hover:text-primary-500">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                `;
+                feather.replace();
+            }
+        }
+
+        class CustomFooter extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <footer class="text-center py-6 text-gray-500 text-sm">
+                        &copy; 2025 xemonbae01 | Anchestor
+                    </footer>
+                `;
+            }
+        }
+
+        customElements.define('custom-navbar', CustomNavbar);
+        customElements.define('custom-footer', CustomFooter);
+
+        const availableAPIs = [
+            {
+                name: "DALL-E Image Generator",
+                endpoint: "/dalle",
+                description: "Generate AI images from prompts using DALL-E model.",
+                method: "GET",
+                example: "?prompt=Sunset&apikey=redwan"
+            },
+            {
+                name: "NSFW Image Generator",
+                endpoint: "/nsfw",
+                description: "Generate NSFW AI images using NSFW model.",
+                method: "GET",
+                example: "?prompt=example&apikey=redwan"
+            },
+            {
+                name: "FLUX.1 Dev Model",
+                endpoint: "/flux-dev",
+                description: "Generate AI images using FLUX.1 dev model.",
+                method: "GET",
+                example: "?prompt=example"
+            },
+            {
+                name: "FLUX.1 Schnell Model",
+                endpoint: "/flux-schnell",
+                description: "Generate AI images using FLUX.1 schnell model.",
+                method: "GET",
+                example: "?prompt=example"
+            }
+        ];
+
+        const apiCardsContainer = document.getElementById("api-cards");
+
+        availableAPIs.forEach(api => {
+            const card = document.createElement("div");
+            card.className = "bg-white rounded-xl shadow-lg border border-gray-100 p-6 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between";
+            card.innerHTML = `
+                <h3 class="text-xl font-bold mb-2 text-primary-500">${api.name}</h3>
+                <p class="text-gray-600 mb-4">${api.description}</p>
+                <p class="mb-4">
+                    <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">${api.method}</span>
+                    <code class="bg-gray-100 px-2 py-1 rounded text-sm">${api.endpoint}${api.example}</code>
+                </p>
+                <button class="mt-auto px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition" onclick="tryAPI('${api.endpoint}', '${api.example}')">Try it</button>
+                <pre class="mt-4 text-sm bg-gray-50 p-3 rounded overflow-x-auto" id="response-${api.endpoint.replace('/','')}">Response will appear here...</pre>
+            `;
+            apiCardsContainer.appendChild(card);
+        });
+
+        async function tryAPI(endpoint, query) {
+            const responseEl = document.getElementById(`response-${endpoint.replace('/','')}`);
+            try {
+                const res = await fetch(`${endpoint}${query}`);
+                if (!res.ok) throw new Error(`Status ${res.status}`);
+                const blob = await res.blob();
+                if (res.headers.get("Content-Type").includes("image")) {
+                    const url = URL.createObjectURL(blob);
+                    responseEl.innerHTML = `<img src="${url}" alt="Generated Image" class="rounded-lg max-w-full" />`;
+                } else {
+                    const text = await res.text();
+                    responseEl.textContent = text;
+                }
+            } catch (err) {
+                responseEl.textContent = `Error: ${err.message}`;
+            }
+        }
+    </script>
+</body>
+          </html>
+          
