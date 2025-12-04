@@ -4,45 +4,56 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 import dotenv from 'dotenv';
 
-// Load environment variables
 dotenv.config();
 
-// Resolve current directory
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Function to load all route files dynamically
-function loadRoutes() {
-  const routesPath = path.join(__dirname, 'routes');
+const routesDir = path.join(__dirname, 'routes');
+const anchestorDir = path.join(__dirname, '..', 'anchestor');
 
-  // Check if routes directory exists
-  if (!fs.existsSync(routesPath)) {
-    console.error('Routes directory does not exist.');
-    process.exit(1);
-  }
+const homeHTML = path.join(anchestorDir, 'index.html');
+const docsHTML = path.join(anchestorDir, 'docs.html');
+const notFoundHTML = path.join(anchestorDir, '404.html');
 
-  // Read and load each route file
-  fs.readdirSync(routesPath).forEach(file => {
+let loadedRoutes = [];
+
+async function loadRoutes() {
+  const files = fs.readdirSync(routesDir);
+  for (const file of files) {
     if (path.extname(file) === '.js') {
       const routeName = path.basename(file, '.js');
       try {
-        const route = import(`./routes/${file}`);
-        route.then(module => {
-          app.use(`/${routeName}`, module.default);
-          console.log(`Loaded route: /${routeName}`);
-        });
-      } catch (error) {
-        console.error(`Error loading route ${file}:`, error);
+        const module = await import(`./routes/${file}`);
+        app.use(`/${routeName}`, module.default);
+        loadedRoutes.push(`/${routeName}`);
+        console.log(`Loaded route: /${routeName}`);
+      } catch (err) {
+        console.error(`Error loading route ${file}:`, err);
       }
     }
-  });
+  }
 }
 
-// Call the function to load routes
-loadRoutes();
+await loadRoutes();
+
+app.get(['/', '/home'], (req, res) => {
+  res.sendFile(homeHTML);
+});
+
+app.get('/docs', (req, res) => {
+  let html = fs.readFileSync(docsHTML, 'utf8');
+  const routesList = loadedRoutes.map(r => `<li><a href="${r}">${r}</a></li>`).join('');
+  html = html.replace('{{routes}}', routesList);
+  res.send(html);
+});
+
+app.use((req, res) => {
+  res.status(404).sendFile(notFoundHTML);
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
