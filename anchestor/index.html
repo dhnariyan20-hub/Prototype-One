@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anchestor | xemonbae01</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        /* Scrollbar for code blocks */
+        pre {
+            scrollbar-width: thin;
+            scrollbar-color: #6366f1 #e5e7eb;
+        }
+        pre::-webkit-scrollbar {
+            height: 8px;
+        }
+        pre::-webkit-scrollbar-thumb {
+            background-color: #6366f1;
+            border-radius: 4px;
+        }
+        pre::-webkit-scrollbar-track {
+            background-color: #e5e7eb;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <custom-navbar></custom-navbar>
+
+    <main class="container mx-auto px-4 py-12">
+        <!-- Hero Section -->
+        <section class="text-center mb-20">
+            <div class="flex justify-center mb-6">
+                <img src="http://static.photos/technology/200x200/42" alt="Profile" class="rounded-full h-32 w-32 object-cover border-4 border-primary-500 shadow-lg">
+            </div>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-primary-500">xemonbae01</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Cyber enthusiast crafting digital experiences with code</p>
+            <div class="flex justify-center space-x-4 mt-6">
+                <a href="#projects" class="px-6 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition">Projects</a>
+                <a href="/docs" class="px-6 py-2 border border-primary-500 text-primary-500 rounded-lg hover:bg-primary-50 transition">API Docs</a>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-lg bg-primary-100 text-primary-500 mr-4">
+                        <i data-feather="github"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-gray-500">GitHub Repos</h3>
+                        <p class="text-2xl font-bold" id="repo-count">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-lg bg-secondary-100 text-secondary-500 mr-4">
+                        <i data-feather="star"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-gray-500">Total Stars</h3>
+                        <p class="text-2xl font-bold" id="star-count">Loading...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-lg bg-purple-100 text-purple-500 mr-4">
+                        <i data-feather="code"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-gray-500">Languages</h3>
+                        <p class="text-2xl font-bold" id="language-count">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 text-primary-500 flex items-center">
+                <i data-feather="folder" class="mr-2"></i> Featured Projects
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid"></div>
+        </section>
+
+        <!-- API Docs Section -->
+        <section id="api" class="mb-20">
+            <h2 class="text-3xl font-bold mb-8 text-primary-500 flex items-center">
+                <i data-feather="terminal" class="mr-2"></i> GitHub API Documentation
+            </h2>
+            <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                <div class="border-b border-gray-200 px-6 py-4 bg-gray-50">
+                    <h3 class="font-semibold text-lg">GET User Information</h3>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-start mb-4">
+                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded mr-3">GET</span>
+                        <code class="bg-gray-100 px-3 py-1 rounded text-sm">https://api.github.com/users/xemonbae01</code>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <pre class="text-sm overflow-x-auto" id="api-response">Loading API response...</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script>
+        class CustomNavbar extends HTMLElement {
+            connectedCallback() {
+                this.attachShadow({ mode: 'open' });
+                this.shadowRoot.innerHTML = `
+                    <nav class="sticky top-0 z-50 bg-white/80 border-b border-gray-200 backdrop-blur-md">
+                        <div class="container mx-auto px-4">
+                            <div class="flex justify-between items-center py-4">
+                                <a href="/" class="text-xl font-bold text-primary-500 flex items-center">
+                                    <i data-feather="cpu" class="mr-2"></i> Anchestor
+                                </a>
+                                <div class="hidden md:flex space-x-8">
+                                    <a href="/" class="text-gray-700 hover:text-primary-500">Home</a>
+                                    <a href="#projects" class="text-gray-700 hover:text-primary-500">Projects</a>
+                                    <a href="#api" class="text-gray-700 hover:text-primary-500">API Docs</a>
+                                    <a href="https://github.com/xemonbae01" target="_blank" class="text-gray-700 hover:text-primary-500">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                `;
+                feather.replace();
+            }
+        }
+
+        class CustomFooter extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <footer class="text-center py-6 text-gray-500 text-sm">
+                        &copy; 2025 xemonbae01 | Anchestor
+                    </footer>
+                `;
+            }
+        }
+
+        customElements.define('custom-navbar', CustomNavbar);
+        customElements.define('custom-footer', CustomFooter);
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const userResponse = await fetch('https://api.github.com/users/xemonbae01');
+                const userData = await userResponse.json();
+                document.getElementById('repo-count').textContent = userData.public_repos || 0;
+
+                const reposResponse = await fetch('https://api.github.com/users/xemonbae01/repos?sort=updated&direction=desc');
+                const reposData = await reposResponse.json();
+
+                const totalStars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+                document.getElementById('star-count').textContent = totalStars;
+
+                const languages = new Set();
+                reposData.forEach(repo => { if (repo.language) languages.add(repo.language); });
+                document.getElementById('language-count').textContent = languages.size;
+
+                const projectsGrid = document.getElementById('projects-grid');
+                reposData.slice(0,6).forEach(project => {
+                    const card = document.createElement('div');
+                    card.className = 'project-card bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300';
+                    card.innerHTML = `
+                        <div class="h-40 bg-gradient-to-r from-primary-500 to-secondary-500"></div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">${project.name}</h3>
+                            <p class="text-gray-600 mb-4">${project.description || 'No description provided'}</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <i data-feather="star" class="w-4 h-4 mr-1"></i>
+                                    <span>${project.stargazers_count}</span>
+                                </div>
+                                <a href="${project.html_url}" target="_blank" class="text-primary-500 hover:text-primary-600 text-sm font-medium">
+                                    View Project <i data-feather="arrow-right" class="w-4 h-4 inline"></i>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    projectsGrid.appendChild(card);
+                    feather.replace();
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        });
+    </script>
+</body>
+    </html>
+    
