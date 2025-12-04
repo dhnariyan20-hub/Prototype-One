@@ -1,173 +1,155 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anchestor | xemonbae01</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        pre {
-            scrollbar-width: thin;
-            scrollbar-color: #6366f1 #e5e7eb;
-        }
-        pre::-webkit-scrollbar {
-            height: 8px;
-        }
-        pre::-webkit-scrollbar-thumb {
-            background-color: #6366f1;
-            border-radius: 4px;
-        }
-        pre::-webkit-scrollbar-track {
-            background-color: #e5e7eb;
-            border-radius: 4px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anchestor | xemonbae01</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<style>
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(to bottom, #e2e8f0, #f8fafc); }
+    pre { scrollbar-width: thin; scrollbar-color: #6366f1 #e5e7eb; }
+    pre::-webkit-scrollbar { height: 8px; }
+    pre::-webkit-scrollbar-thumb { background-color: #6366f1; border-radius: 4px; }
+    pre::-webkit-scrollbar-track { background-color: #e5e7eb; border-radius: 4px; }
+    .glass { background: rgba(30, 30, 30, 0.25); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; }
+    .text-glow { text-shadow: 0 0 8px rgba(0,0,0,0.2); }
+    .transition-all-custom { transition: all 0.3s ease; }
+</style>
 </head>
-<body class="bg-gray-50 text-gray-900">
-    <nav class="sticky top-0 z-50 bg-white/80 border-b border-gray-200 backdrop-blur-md">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <a href="/" class="text-xl font-bold text-primary-500 flex items-center">
-                    <i data-feather="cpu" class="mr-2"></i> Anchestor
-                </a>
-                <div class="md:hidden relative">
-                    <button id="menu-btn" class="p-2 rounded hover:bg-gray-100 transition">
-                        <i data-feather="more-vertical"></i>
-                    </button>
-                    <div id="menu" class="hidden absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg">
-                        <a href="/" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Home</a>
-                        <a href="#projects" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Projects</a>
-                        <a href="#api" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">API Docs</a>
-                        <a href="https://github.com/xemonbae01" target="_blank" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">GitHub</a>
-                    </div>
+<body class="text-gray-900">
+
+<nav class="sticky top-0 z-50 glass shadow-xl">
+    <div class="container mx-auto px-6">
+        <div class="flex justify-between items-center py-4">
+            <a href="/" class="text-2xl font-extrabold text-primary-500 flex items-center text-glow">
+                <i data-feather="cpu" class="mr-2"></i> Anchestor
+            </a>
+            <div class="md:hidden relative">
+                <button id="menu-btn" class="p-2 rounded hover:bg-white/10 transition-all">
+                    <i data-feather="more-vertical"></i>
+                </button>
+                <div id="menu" class="hidden absolute right-0 mt-2 w-48 bg-gray-900/80 backdrop-blur-lg border border-white/20 rounded-lg shadow-lg overflow-hidden transition-all-custom">
+                    <a href="/" class="block px-6 py-3 text-gray-100 hover:bg-white/10">Home</a>
+                    <a href="#projects" class="block px-6 py-3 text-gray-100 hover:bg-white/10">Projects</a>
+                    <a href="#api" class="block px-6 py-3 text-gray-100 hover:bg-white/10">API Docs</a>
+                    <a href="https://github.com/xemonbae01" target="_blank" class="block px-6 py-3 text-gray-100 hover:bg-white/10">GitHub</a>
                 </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="/" class="text-gray-700 hover:text-primary-500">Home</a>
-                    <a href="#projects" class="text-gray-700 hover:text-primary-500">Projects</a>
-                    <a href="#api" class="text-gray-700 hover:text-primary-500">API Docs</a>
-                    <a href="https://github.com/xemonbae01" target="_blank" class="text-gray-700 hover:text-primary-500">GitHub</a>
+            </div>
+            <div class="hidden md:flex space-x-8 text-lg font-medium">
+                <a href="/" class="text-gray-100 hover:text-primary-500 transition-all">Home</a>
+                <a href="#projects" class="text-gray-100 hover:text-primary-500 transition-all">Projects</a>
+                <a href="#api" class="text-gray-100 hover:text-primary-500 transition-all">API Docs</a>
+                <a href="https://github.com/xemonbae01" target="_blank" class="text-gray-100 hover:text-primary-500 transition-all">GitHub</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="container mx-auto px-6 py-16">
+    <section class="text-center mb-24 relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-300 via-gray-100 to-gray-200 opacity-15 -z-10 rounded-xl"></div>
+        <div class="flex justify-center mb-6">
+            <img src="http://static.photos/technology/200x200/42" alt="Profile" class="rounded-full h-36 w-36 object-cover border-4 border-primary-500 shadow-2xl transition-transform hover:scale-105">
+        </div>
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-4 text-primary-500 text-glow">xemonbae01</h1>
+        <p class="text-xl md:text-2xl text-gray-100 max-w-2xl mx-auto mb-6 text-glow">Cyber enthusiast crafting digital experiences with code</p>
+        <div class="flex justify-center space-x-6">
+            <a href="#projects" class="px-8 py-3 bg-gradient-to-r from-primary-500 to-secondary-500 text-white rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all font-semibold">Projects</a>
+            <a href="/docs" class="px-8 py-3 border border-primary-500 text-primary-500 rounded-2xl hover:bg-primary-600 hover:text-white hover:scale-105 transition-all font-semibold">API Docs</a>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+        <div class="glass p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all-custom transform hover:-translate-y-2">
+            <div class="flex items-center mb-4">
+                <div class="p-4 rounded-full bg-gradient-to-tr from-primary-400 to-primary-600 text-white mr-4 shadow-lg">
+                    <i data-feather="github"></i>
+                </div>
+                <div>
+                    <h3 class="text-gray-100 font-semibold text-glow">GitHub Repos</h3>
+                    <p class="text-3xl font-bold text-white text-glow" id="repo-count">Loading...</p>
                 </div>
             </div>
         </div>
-    </nav>
-
-    <main class="container mx-auto px-4 py-12">
-        <section class="text-center mb-20">
-            <div class="flex justify-center mb-6">
-                <img src="http://static.photos/technology/200x200/42" alt="Profile" class="rounded-full h-32 w-32 object-cover border-4 border-primary-500 shadow-lg">
-            </div>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-primary-500">xemonbae01</h1>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Cyber enthusiast crafting digital experiences with code</p>
-            <div class="flex justify-center space-x-4 mt-6">
-                <a href="#projects" class="px-6 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition">Projects</a>
-                <a href="/docs" class="px-6 py-2 border border-primary-500 text-primary-500 rounded-lg hover:bg-primary-50 transition">API Docs</a>
-            </div>
-        </section>
-
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
-                <div class="flex items-center">
-                    <div class="p-3 rounded-lg bg-primary-100 text-primary-500 mr-4">
-                        <i data-feather="github"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-gray-500">GitHub Repos</h3>
-                        <p class="text-2xl font-bold" id="repo-count">Loading...</p>
-                    </div>
+        <div class="glass p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all-custom transform hover:-translate-y-2">
+            <div class="flex items-center mb-4">
+                <div class="p-4 rounded-full bg-gradient-to-tr from-yellow-400 to-yellow-600 text-white mr-4 shadow-lg">
+                    <i data-feather="star"></i>
+                </div>
+                <div>
+                    <h3 class="text-gray-100 font-semibold text-glow">Total Stars</h3>
+                    <p class="text-3xl font-bold text-white text-glow" id="star-count">Loading...</p>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
-                <div class="flex items-center">
-                    <div class="p-3 rounded-lg bg-secondary-100 text-secondary-500 mr-4">
-                        <i data-feather="star"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-gray-500">Total Stars</h3>
-                        <p class="text-2xl font-bold" id="star-count">Loading...</p>
-                    </div>
+        </div>
+        <div class="glass p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all-custom transform hover:-translate-y-2">
+            <div class="flex items-center mb-4">
+                <div class="p-4 rounded-full bg-gradient-to-tr from-purple-400 to-purple-600 text-white mr-4 shadow-lg">
+                    <i data-feather="code"></i>
+                </div>
+                <div>
+                    <h3 class="text-gray-100 font-semibold text-glow">Languages</h3>
+                    <p class="text-3xl font-bold text-white text-glow" id="language-count">Loading...</p>
                 </div>
             </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
-                <div class="flex items-center">
-                    <div class="p-3 rounded-lg bg-purple-100 text-purple-500 mr-4">
-                        <i data-feather="code"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-gray-500">Languages</h3>
-                        <p class="text-2xl font-bold" id="language-count">Loading...</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="projects" class="mb-20">
-            <h2 class="text-3xl font-bold mb-8 text-primary-500 flex items-center">
-                <i data-feather="folder" class="mr-2"></i> Featured Projects
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid"></div>
-        </section>
-    </main>
+    <section id="projects" class="mb-24">
+        <h2 class="text-4xl font-bold mb-12 text-primary-500 flex items-center justify-center text-glow">
+            <i data-feather="folder" class="mr-3"></i> Featured Projects
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid"></div>
+    </section>
+</main>
 
-    <footer class="text-center py-6 text-gray-500 text-sm">
-        &copy; 2025 xemonbae01 | Anchestor
-    </footer>
+<footer class="glass text-center py-8 text-gray-100 text-sm mt-12 shadow-inner">
+    &copy; 2025 xemonbae01 | Anchestor
+</footer>
 
-    <script>
-        feather.replace();
-        const menuBtn = document.getElementById('menu-btn');
-        const menu = document.getElementById('menu');
-        menuBtn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+<script>
+    feather.replace();
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+    menuBtn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    document.addEventListener('click', (e) => { if (!menu.contains(e.target) && e.target !== menuBtn) menu.classList.add('hidden'); });
 
-        document.addEventListener('click', (e) => {
-            if (!menu.contains(e.target) && e.target !== menuBtn) {
-                menu.classList.add('hidden');
-            }
-        });
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            const reposResponse = await fetch('https://api.github.com/users/xemonbae01/repos?sort=updated&direction=desc');
+            const reposData = await reposResponse.json();
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            try {
-                const reposResponse = await fetch('https://api.github.com/users/xemonbae01/repos?sort=updated&direction=desc');
-                const reposData = await reposResponse.json();
+            document.getElementById('star-count').textContent = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+            const languages = new Set(); reposData.forEach(r => { if (r.language) languages.add(r.language); });
+            document.getElementById('language-count').textContent = languages.size;
+            document.getElementById('repo-count').textContent = reposData.length;
 
-                const totalStars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
-                document.getElementById('star-count').textContent = totalStars;
-
-                const languages = new Set();
-                reposData.forEach(repo => { if (repo.language) languages.add(repo.language); });
-                document.getElementById('language-count').textContent = languages.size;
-
-                document.getElementById('repo-count').textContent = reposData.length;
-
-                const projectsGrid = document.getElementById('projects-grid');
-                reposData.slice(0,6).forEach(project => {
-                    const card = document.createElement('div');
-                    card.className = 'project-card bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300';
-                    card.innerHTML = `
-                        <div class="h-40 bg-gradient-to-r from-primary-500 to-secondary-500"></div>
-                        <div class="p-6">
-                            <h3 class="font-bold text-lg mb-2">${project.name}</h3>
-                            <p class="text-gray-600 mb-4">${project.description || 'No description provided'}</p>
-                            <div class="flex justify-between items-center">
-                                <div class="flex items-center text-sm text-gray-500">
-                                    <i data-feather="star" class="w-4 h-4 mr-1"></i>
-                                    <span>${project.stargazers_count}</span>
-                                </div>
-                                <a href="${project.html_url}" target="_blank" class="text-primary-500 hover:text-primary-600 text-sm font-medium">
-                                    View Project <i data-feather="arrow-right" class="w-4 h-4 inline"></i>
-                                </a>
+            const projectsGrid = document.getElementById('projects-grid');
+            reposData.slice(0,6).forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'bg-gray-900 rounded-3xl shadow-xl overflow-hidden transform hover:-translate-y-1 hover:shadow-2xl transition-all-custom';
+                card.innerHTML = `
+                    <div class="h-44 bg-gradient-to-tr from-primary-500 to-secondary-500"></div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2 text-white text-glow">${project.name}</h3>
+                        <p class="text-gray-300 mb-4">${project.description || 'No description provided'}</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i data-feather="star" class="w-4 h-4 mr-1"></i>
+                                <span>${project.stargazers_count}</span>
                             </div>
+                            <a href="${project.html_url}" target="_blank" class="text-primary-500 hover:text-primary-600 text-sm font-medium">
+                                View Project <i data-feather="arrow-right" class="w-4 h-4 inline"></i>
+                            </a>
                         </div>
-                    `;
-                    projectsGrid.appendChild(card);
-                    feather.replace();
-                });
-            } catch (err) {
-                console.error(err);
-            }
-        });
-    </script>
+                    </div>
+                `;
+                projectsGrid.appendChild(card);
+                feather.replace();
+            });
+        } catch(err){ console.error(err); }
+    });
+</script>
 </body>
 </html>
